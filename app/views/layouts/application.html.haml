@@ -1,5 +1,5 @@
 !!!
-%html
+%html{"ng-app" => "sms"}
   %head
     %meta{:name => "viewport", :content => "width=device-width, initial-scale=1.0"}
     %title= content_for?(:title) ? yield(:title) : 'County Sms Portal'
@@ -67,7 +67,7 @@
                   / /.modal
                 %ul.inbox-nav.inbox-divider
                   %li.active
-                    %a{:href => "#"}
+                    %a{:href => messages_path}
                       %i.fa.fa-inbox
                       Inbox
                       %span.label.label-danger.pull-right 2
@@ -87,6 +87,7 @@
                     %a{:href => "#"}
                       %i.fa.fa-users
                       Contacts
+                      %span.label.label-primary.pull-right 200
                 %ul.nav.nav-pills.nav-stacked.labels-info.inbox-divider
                   %li
                     %h4 Categories
