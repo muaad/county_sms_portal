@@ -10,6 +10,37 @@
  * defined in the other CSS/SCSS files in this directory. It is generally better to create a new
  * file per style scope.
  *
+ *= require arjuna
+ *= require bootstrap-reset
  *= require_tree .
  *= require_self
  */
+
+
+ section {
+   margin-top: 0px;
+ }
+
+ .box {
+   padding: 0px;
+ }
+
+ .mail-box .sm-side {
+ 	width: 20%;
+ }
+
+ .nav {
+ 	padding-left: 10px;
+ }
+
+ ul.inbox-nav {
+ 	padding: 10px;
+ }
+
+ .mail-box .sm-side .user-head {
+ 	background: #4C7894;
+ }
+
+ .inbox-head {
+ 	background: #406781;
+ }
