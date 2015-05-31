@@ -4,12 +4,425 @@
     %meta{:name => "viewport", :content => "width=device-width, initial-scale=1.0"}
     %title= content_for?(:title) ? yield(:title) : 'County Sms Portal'
     %meta{:name => "description", :content => "#{content_for?(:description) ? yield(:description) : 'County Sms Portal'}"}
-    = stylesheet_link_tag 'application', media: 'all'
+    = stylesheet_link_tag 'application', '//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css', media: 'all'
     = javascript_include_tag 'application'
     = csrf_meta_tags
-  %body
-    %header
-      = render 'layouts/navigation'
-    %main{:role => "main"}
-      = render 'layouts/messages'
-      = yield
+  %body.cl-default.fixed
+    / start:navbar top
+    / = render 'layouts/navigation'
+    %section.content
+      .row
+        .col-lg-12
+          .box
+            / mail inbox start
+            .mail-box
+              %aside.sm-side
+                .user-head
+                  %a.inbox-avatar{:href => "javascript:;"}
+                    %img.img-responsive{:alt => "", :src => "img/user.jpg"}
+                  .user-name
+                    %h5
+                      %a{:href => "#"} Jonathan Smith
+                    %span
+                      %a{:href => "#"} jsmith@gmail.com
+                  %a.mail-dropdown.pull-right{:href => "javascript:;"}
+                    %i.fa.fa-chevron-down
+                .inbox-body
+                  %a.btn.btn-compose{"data-toggle" => "modal", :href => "#myModal"}
+                    Compose
+                  / Modal
+                  #myModal.modal.fade{"aria-hidden" => "true", "aria-labelledby" => "myModalLabel", :role => "dialog", :tabindex => "-1"}
+                    .modal-dialog
+                      .modal-content
+                        .modal-header
+                          %button.close{"aria-hidden" => "true", "data-dismiss" => "modal", :type => "button"} &times;
+                          %h4.modal-title Compose
+                        .modal-body
+                          %form.form-horizontal{:role => "form"}
+                            .form-group
+                              %label.col-lg-2.control-label To
+                              .col-lg-10
+                                %input#inputEmail1.form-control{:placeholder => "", :type => "text"}
+                            .form-group
+                              %label.col-lg-2.control-label Cc / Bcc
+                              .col-lg-10
+                                %input#cc.form-control{:placeholder => "", :type => "text"}
+                            .form-group
+                              %label.col-lg-2.control-label Subject
+                              .col-lg-10
+                                %input#inputPassword1.form-control{:placeholder => "", :type => "text"}
+                            .form-group
+                              %label.col-lg-2.control-label Message
+                              .col-lg-10
+                                %textarea.form-control{:cols => "30", :id => "", :name => "", :rows => "10"}
+                            .form-group
+                              .col-lg-offset-2.col-lg-10
+                                %span.btn.green.fileinput-button
+                                  %i.fa.fa-plus.fa.fa-white
+                                  %span Attachment
+                                  %input{:multiple => "", :name => "files[]", :type => "file"}
+                                %button.btn.btn-send{:type => "submit"} Send
+                      / /.modal-content
+                    / /.modal-dialog
+                  / /.modal
+                %ul.inbox-nav.inbox-divider
+                  %li.active
+                    %a{:href => "#"}
+                      %i.fa.fa-inbox
+                      Inbox
+                      %span.label.label-danger.pull-right 2
+                  %li
+                    %a{:href => "#"}
+                      %i.fa.fa-envelope-o
+                      Sent SMS
+                  %li
+                    %a{:href => "#"}
+                      %i.fa.fa-star
+                      Favorite
+                  %li
+                    %a{:href => "#"}
+                      %i.fa.fa-trash-o
+                      Trash
+                  %li
+                    %a{:href => "#"}
+                      %i.fa.fa-users
+                      Contacts
+                %ul.nav.nav-pills.nav-stacked.labels-info.inbox-divider
+                  %li
+                    %h4 Categories
+                  %li
+                    %a{:href => "#"}
+                      %i.fa.fa-sign-blank.text-danger
+                      Work
+                  %li
+                    %a{:href => "#"}
+                      %i.fa.fa-sign-blank.text-success
+                      Design
+                  %li
+                    %a{:href => "#"}
+                      %i.fa.fa-sign-blank.text-info
+                      Family
+                    %li
+                      %a{:href => "#"}
+                        %i.fa.fa-sign-blank.text-warning
+                        Friends
+                      %li
+                        %a{:href => "#"}
+                          %i.fa.fa-sign-blank.text-primary
+                          Office
+                / %ul.nav.nav-pills.nav-stacked.labels-info
+                /   %li
+                /     %h4 Buddy online
+                /   %li
+                /     %a{:href => "#"}
+                /       %i.fa.fa-circle.text-success
+                /       Jhone Doe
+                /       %p I do not think
+                /   %li
+                /     %a{:href => "#"}
+                /       %i.fa.fa-circle.text-danger
+                /       Sumon
+                /       %p Busy with coding
+                /   %li
+                /     %a{:href => "#"}
+                /       %i.fa.fa-circle.text-muted
+                /       Anjelina Joli
+                /       %p I out of control
+                /     %li
+                /       %a{:href => "#"}
+                /         %i.fa.fa-circle.text-muted
+                /         Jonathan Smith
+                /         %p I am not here
+                /       %li
+                /         %a{:href => "#"}
+                /           %i.fa.fa-circle.text-muted
+                /           Tawseef
+                /           %p I do not think
+                .inbox-body.text-center
+                  .btn-group
+                    %a.btn.mini.btn-primary{:href => "javascript:;"}
+                      %i.fa.fa-plus
+                  .btn-group
+                    %a.btn.mini.btn-success{:href => "javascript:;"}
+                      %i.fa.fa-phone
+                  .btn-group
+                    %a.btn.mini.btn-info{:href => "javascript:;"}
+                      %i.fa.fa-cog
+              %aside.lg-side
+                .inbox-head
+                  %h3 Inbox
+                  %form.pull-right.position{:action => "#"}
+                    .input-append
+                      %input.sr-input{:placeholder => "Search Mail", :type => "text"}
+                        %button.btn.sr-btn{:type => "button"}
+                          %i.fa.fa-search
+                .inbox-body
+                  .mail-option
+                    .chk-all
+                      %input.mail-checkbox.mail-group-checkbox{:type => "checkbox"}
+                        .btn-group
+                          %a.btn.mini.all{"data-toggle" => "dropdown", :href => "#"}
+                            All
+                            %i.fa.fa-angle-down
+                          %ul.dropdown-menu
+                            %li
+                              %a{:href => "#"} None
+                            %li
+                              %a{:href => "#"} Read
+                            %li
+                              %a{:href => "#"} Unread
+                    .btn-group
+                      %a.btn.mini.tooltips{"data-original-title" => "Refresh", "data-placement" => "top", "data-toggle" => "dropdown", :href => "#"}
+                        %i.fa.fa-refresh
+                    .btn-group.hidden-phone
+                      %a.btn.mini.blue{"data-toggle" => "dropdown", :href => "#"}
+                        More
+                        %i.fa.fa-angle-down
+                      %ul.dropdown-menu
+                        %li
+                          %a{:href => "#"}
+                            %i.fa.fa-pencil
+                            Mark as Read
+                        %li
+                          %a{:href => "#"}
+                            %i.fa.fa-ban
+                            Spam
+                        %li.divider
+                        %li
+                          %a{:href => "#"}
+                            %i.fa.fa-trash-o
+                            Delete
+                    .btn-group
+                      %a.btn.mini.blue{"data-toggle" => "dropdown", :href => "#"}
+                        Move to
+                        %i.fa.fa-angle-down
+                      %ul.dropdown-menu
+                        %li
+                          %a{:href => "#"}
+                            %i.fa.fa-pencil
+                            Mark as Read
+                        %li
+                          %a{:href => "#"}
+                            %i.fa.fa-ban
+                            Spam
+                        %li.divider
+                        %li
+                          %a{:href => "#"}
+                            %i.fa.fa-trash-o
+                            Delete
+                    %ul.unstyled.inbox-pagination
+                      %li
+                        %span 1-50 of 234
+                      %li
+                        %a.np-btn{:href => "#"}
+                          %i.fa.fa-angle-left.pagination-left
+                      %li
+                        %a.np-btn{:href => "#"}
+                          %i.fa.fa-angle-right.pagination-right
+                  %table.table.table-inbox.table-hover
+                    %tbody
+                      %tr.unread
+                        %td.inbox-small-cells
+                          %input.mail-checkbox{:type => "checkbox"}
+                        %td.inbox-small-cells
+                          %i.fa.fa-star
+                        %td.view-message.dont-show Arjuna Admin
+                        %td.view-message Lorem ipsum dolor imit set.
+                        %td.view-message.inbox-small-cells
+                          %i.fa.fa-paperclip
+                        %td.view-message.text-right 9:27 AM
+                      %tr.unread
+                        %td.inbox-small-cells
+                          %input.mail-checkbox{:type => "checkbox"}
+                        %td.inbox-small-cells
+                          %i.fa.fa-star
+                        %td.view-message.dont-show John Doe
+                        %td.view-message Hi Bro, How are you?
+                        %td.view-message.inbox-small-cells
+                        %td.view-message.text-right March 15
+                      %tr
+                        %td.inbox-small-cells
+                          %input.mail-checkbox{:type => "checkbox"}
+                        %td.inbox-small-cells
+                          %i.fa.fa-star
+                        %td.view-message.dont-show Jabuk Doe
+                        %td.view-message Lorem ipsum dolor sit amet
+                        %td.view-message.inbox-small-cells
+                        %td.view-message.text-right June 15
+                      %tr
+                        %td.inbox-small-cells
+                          %input.mail-checkbox{:type => "checkbox"}
+                        %td.inbox-small-cells
+                          %i.fa.fa-star
+                        %td.view-message.dont-show Facebook
+                        %td.view-message Dolor sit amet, consectetuer adipiscing
+                        %td.view-message.inbox-small-cells
+                        %td.view-message.text-right April 01
+                      %tr
+                        %td.inbox-small-cells
+                          %input.mail-checkbox{:type => "checkbox"}
+                        %td.inbox-small-cells
+                          %i.fa.fa-star.inbox-started
+                        %td.view-message.dont-show
+                          Cendy Andrianto
+                          %span.label.label-danger.pull-right urgent
+                        %td.view-message Lorem ipsum dolor sit amet
+                        %td.view-message.inbox-small-cells
+                        %td.view-message.text-right May 23
+                      %tr
+                        %td.inbox-small-cells
+                          %input.mail-checkbox{:type => "checkbox"}
+                        %td.inbox-small-cells
+                          %i.fa.fa-star.inbox-started
+                        %td.view-message.dont-show Facebook
+                        %td.view-message Dolor sit amet, consectetuer adipiscing
+                        %td.view-message.inbox-small-cells
+                          %i.fa.fa-paperclip
+                        %td.view-message.text-right March 14
+                      %tr
+                        %td.inbox-small-cells
+                          %input.mail-checkbox{:type => "checkbox"}
+                        %td.inbox-small-cells
+                          %i.fa.fa-star.inbox-started
+                        %td.view-message.dont-show Rosid nur
+                        %td.view-message Lorem ipsum dolor sit amet
+                        %td.view-message.inbox-small-cells
+                          %i.fa.fa-paperclip
+                        %td.view-message.text-right January 19
+                      %tr
+                        %td.inbox-small-cells
+                          %input.mail-checkbox{:type => "checkbox"}
+                        %td.inbox-small-cells
+                          %i.fa.fa-star
+                        %td.view-message.dont-show
+                          Facebook
+                          %span.label.label-success.pull-right megazine
+                        %td.view-message.view-message Dolor sit amet, consectetuer adipiscing
+                        %td.view-message.inbox-small-cells
+                        %td.view-message.text-right March 04
+                      %tr
+                        %td.inbox-small-cells
+                          %input.mail-checkbox{:type => "checkbox"}
+                        %td.inbox-small-cells
+                          %i.fa.fa-star
+                        %td.view-message.dont-show Cendy Andrianto
+                        %td.view-message.view-message Lorem ipsum dolor sit amet
+                        %td.view-message.inbox-small-cells
+                        %td.view-message.text-right June 13
+                      %tr
+                        %td.inbox-small-cells
+                          %input.mail-checkbox{:type => "checkbox"}
+                        %td.inbox-small-cells
+                          %i.fa.fa-star
+                        %td.view-message.dont-show
+                          Facebook
+                          %span.label.label-info.pull-right family
+                        %td.view-message.view-message Dolor sit amet, consectetuer adipiscing
+                        %td.view-message.inbox-small-cells
+                        %td.view-message.text-right March 24
+                      %tr
+                        %td.inbox-small-cells
+                          %input.mail-checkbox{:type => "checkbox"}
+                        %td.inbox-small-cells
+                          %i.fa.fa-star.inbox-started
+                        %td.view-message.dont-show Fikriandro
+                        %td.view-message Lorem ipsum dolor sit amet
+                        %td.view-message.inbox-small-cells
+                        %td.view-message.text-right March 09
+                      %tr
+                        %td.inbox-small-cells
+                          %input.mail-checkbox{:type => "checkbox"}
+                        %td.inbox-small-cells
+                          %i.fa.fa-star.inbox-started
+                        %td.dont-show Facebook
+                        %td.view-message Dolor sit amet, consectetuer adipiscing
+                        %td.view-message.inbox-small-cells
+                          %i.fa.fa-paperclip
+                        %td.view-message.text-right May 14
+                      %tr
+                        %td.inbox-small-cells
+                          %input.mail-checkbox{:type => "checkbox"}
+                        %td.inbox-small-cells
+                          %i.fa.fa-star
+                        %td.view-message.dont-show Badrasianto
+                        %td.view-message Lorem ipsum dolor sit amet
+                        %td.view-message.inbox-small-cells
+                          %i.fa.fa-paperclip
+                        %td.view-message.text-right February 25
+                      %tr
+                        %td.inbox-small-cells
+                          %input.mail-checkbox{:type => "checkbox"}
+                        %td.inbox-small-cells
+                          %i.fa.fa-star
+                        %td.dont-show Facebook
+                        %td.view-message.view-message Dolor sit amet, consectetuer adipiscing
+                        %td.view-message.inbox-small-cells
+                        %td.view-message.text-right March 14
+                      %tr
+                        %td.inbox-small-cells
+                          %input.mail-checkbox{:type => "checkbox"}
+                        %td.inbox-small-cells
+                          %i.fa.fa-star
+                        %td.view-message.dont-show Daemon emon
+                        %td.view-message Lorem ipsum dolor sit amet
+                        %td.view-message.inbox-small-cells
+                        %td.view-message.text-right April 07
+                      %tr
+                        %td.inbox-small-cells
+                          %input.mail-checkbox{:type => "checkbox"}
+                        %td.inbox-small-cells
+                          %i.fa.fa-star
+                        %td.view-message.dont-show Twitter
+                        %td.view-message Dolor sit amet, consectetuer adipiscing
+                        %td.view-message.inbox-small-cells
+                        %td.view-message.text-right July 14
+                      %tr
+                        %td.inbox-small-cells
+                          %input.mail-checkbox{:type => "checkbox"}
+                        %td.inbox-small-cells
+                          %i.fa.fa-star.inbox-started
+                        %td.view-message.dont-show Sumomonosuke
+                        %td.view-message Lorem ipsum dolor sit amet
+                        %td.view-message.inbox-small-cells
+                        %td.view-message.text-right August 10
+                      %tr
+                        %td.inbox-small-cells
+                          %input.mail-checkbox{:type => "checkbox"}
+                        %td.inbox-small-cells
+                          %i.fa.fa-star
+                        %td.view-message.dont-show Facebook
+                        %td.view-message.view-message Dolor sit amet, consectetuer adipiscing
+                        %td.view-message.inbox-small-cells
+                          %i.fa.fa-paperclip
+                        %td.view-message.text-right April 14
+                      %tr
+                        %td.inbox-small-cells
+                          %input.mail-checkbox{:type => "checkbox"}
+                        %td.inbox-small-cells
+                          %i.fa.fa-star
+                        %td.view-message.dont-show Daemon nikiwa
+                        %td.view-message Lorem ipsum dolor sit amet
+                        %td.view-message.inbox-small-cells
+                          %i.fa.fa-paperclip
+                        %td.view-message.text-right June 16
+                      %tr
+                        %td.inbox-small-cells
+                          %input.mail-checkbox{:type => "checkbox"}
+                        %td.inbox-small-cells
+                          %i.fa.fa-star.inbox-started
+                        %td.view-message.dont-show Sumomonosuke
+                        %td.view-message Lorem ipsum dolor sit amet
+                        %td.view-message.inbox-small-cells
+                        %td.view-message.text-right August 10
+                      %tr
+                        %td.inbox-small-cells
+                          %input.mail-checkbox{:type => "checkbox"}
+                        %td.inbox-small-cells
+                          %i.fa.fa-star
+                        %td.view-message.dont-show Facebook
+                        %td.view-message.view-message Dolor sit amet, consectetuer adipiscing
+                        %td.view-message.inbox-small-cells
+                          %i.fa.fa-paperclip
+                        %td.view-message.text-right April 14
+            / mail inbox end
+      / end:content

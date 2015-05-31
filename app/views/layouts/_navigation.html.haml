@@ -1,13 +1,49 @@
--# navigation styled for Bootstrap 3.0
-%nav.navbar.navbar-default.navbar-fixed-top
-  .container
-    .navbar-header
-      %button.navbar-toggle{"data-target" => ".navbar-collapse", "data-toggle" => "collapse", :type => "button"}
-        %span.sr-only Toggle navigation
-        %span.icon-bar
-        %span.icon-bar
-        %span.icon-bar
-      = link_to 'Home', root_path, class: 'navbar-brand'
-    .collapse.navbar-collapse
-      %ul.nav.navbar-nav
-        = render 'layouts/navigation_links'
+%header.header
+  %a.logo{:href => root_path}
+    %i.fa.fa-home
+    County SMS Portal
+  / Header Navbar: style can be found in header.less
+  %nav.navbar.navbar-static-top{:role => "navigation"}
+    #atas.collapse.navbar-collapse
+      .navbar-left
+        %ul.nav.navbar-nav
+          %li.dropdown.tasks-menu
+            %a.dropdown-toggle{"data-toggle" => "dropdown", :href => "#"}
+              %i.fa.fa-bell
+              %span#incident-count.label.label-danger 33
+            %ul.dropdown-menu
+              %li.header You have 33 new incidents
+              %li
+                / inner menu: contains the actual data
+                %ul.menu
+              %li.footer
+                %a{:href => "#"} View all incidents
+          /
+            <li class="form-search">
+            <input type="text" class="form-control" placeholder="Search..">
+            </li>
+      .navbar-right
+        %ul.nav.navbar-nav
+          %li#nav-link
+          %li.dropdown
+            %a.dropdown-toggle{"data-toggle" => "dropdown", :href => "#"}
+              %strong @ujirani
+            %ul.dropdown-menu.dropdown-login
+              %li
+                .navbar-login
+                  .row
+                    .col-lg-3
+                      %p.text-center
+                        %img.img-responsive.img-circle{:src => "img/contact.jpg"}
+                    .col-lg-9
+                      %p.text-left
+                        %strong Nairobi
+                      %p.text-left.small admin@nairobi.gov.ke
+                      .row
+                        .col-md-6
+                          %small Edit
+                        .col-md-6
+              %li.divider
+              %li
+                .navbar-login.navbar-login-session
+                  = link_to 'Logout', destroy_user_session_path, :method=>'delete', class: "btn btn-default btn-square btn-block"
