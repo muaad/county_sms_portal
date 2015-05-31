@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150531152239) do
+ActiveRecord::Schema.define(version: 20150531153353) do
 
   create_table "accounts", force: :cascade do |t|
     t.string   "name"
@@ -25,7 +25,10 @@ ActiveRecord::Schema.define(version: 20150531152239) do
     t.string   "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer  "account_id"
   end
+
+  add_index "categories", ["account_id"], name: "index_categories_on_account_id"
 
   create_table "contacts", force: :cascade do |t|
     t.string   "name"
@@ -33,15 +36,20 @@ ActiveRecord::Schema.define(version: 20150531152239) do
     t.string   "location"
     t.datetime "created_at",   null: false
     t.datetime "updated_at",   null: false
+    t.integer  "account_id"
   end
+
+  add_index "contacts", ["account_id"], name: "index_contacts_on_account_id"
 
   create_table "message_categories", force: :cascade do |t|
     t.integer  "message_id"
     t.integer  "category_id"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
+    t.integer  "account_id"
   end
 
+  add_index "message_categories", ["account_id"], name: "index_message_categories_on_account_id"
   add_index "message_categories", ["category_id"], name: "index_message_categories_on_category_id"
   add_index "message_categories", ["message_id"], name: "index_message_categories_on_message_id"
 
@@ -52,8 +60,10 @@ ActiveRecord::Schema.define(version: 20150531152239) do
     t.integer  "user_id"
     t.datetime "created_at",                null: false
     t.datetime "updated_at",                null: false
+    t.integer  "account_id"
   end
 
+  add_index "messages", ["account_id"], name: "index_messages_on_account_id"
   add_index "messages", ["contact_id"], name: "index_messages_on_contact_id"
   add_index "messages", ["user_id"], name: "index_messages_on_user_id"
 
