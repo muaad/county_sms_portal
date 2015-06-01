@@ -1,18 +1,38 @@
-%p#notice= notice
-
-%p
-  %b Text:
-  = @message.text
-%p
-  %b Contact:
-  = @message.contact
-%p
-  %b Incoming:
-  = @message.incoming
-%p
-  %b User:
-  = @message.user
-
-= link_to 'Edit', edit_message_path(@message)
-\|
-= link_to 'Back', messages_path
+.inbox-head
+	%h3 View Mail
+	%form.pull-right.position{:action => "#"}
+		.input-append
+			%input.sr-input{:placeholder => "Search Mail", :type => "text"}
+				%button.btn.sr-btn{:type => "button"}
+					%i.fa.fa-search
+#main-wrapper
+	#main
+		.inbox-body
+			.heading-inbox.row
+				.col-md-8
+					.compose-btn
+						%a.btn.btn-sm.btn-primary{:href => "mail_compose.html"}
+							%i.fa.fa-reply
+							Reply
+						%button.btn.btn-sm.tooltips{"data-original-title" => "Print", "data-placement" => "top", "data-toggle" => "tooltip", :title => "", :type => "button"}
+							%i.fa.fa-print
+						%button.btn.btn-sm.tooltips{"data-original-title" => "Trash", "data-placement" => "top", "data-toggle" => "tooltip", :title => ""}
+							%i.fa.fa-trash-o
+				.col-md-4.text-right
+					%p.date 8:02 PM 12 FEB 2014
+				.col-md-12
+					%h4 
+						= "#{@message.contact.name} [#{@message.contact.phone_number}]"
+			.view-mail
+				.room-box
+					%h5.text-primary
+						%a{:href => contact_path(@message.contact)}
+							= @message.contact.name
+					%p
+						= @message.text
+			.row.reply-box
+				%form
+					.col-lg-11.txt-div
+						%textarea.form-control#txt-area{:type => "text"}
+					.col-lg-1.btn-div
+						%input.btn.btn-success.pull-right#send-buttom{type: "submit", value: "Reply"}
