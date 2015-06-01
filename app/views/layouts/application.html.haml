@@ -16,8 +16,8 @@
           .box
             / mail inbox start
             .mail-box
-              %aside.sm-side
-                .user-head
+              %aside.sm-side.slimScrollDiv
+                .user-head.fixed
                   %a.inbox-avatar{:href => "javascript:;"}
                     %img.img-responsive{:alt => "", :src => "img/user.jpg"}
                   .user-name
@@ -94,23 +94,15 @@
                   %li
                     %a{:href => "#"}
                       %i.fa.fa-sign-blank.text-danger
-                      Work
+                      Accidents
                   %li
                     %a{:href => "#"}
                       %i.fa.fa-sign-blank.text-success
-                      Design
+                      Electricity
                   %li
                     %a{:href => "#"}
                       %i.fa.fa-sign-blank.text-info
-                      Family
-                    %li
-                      %a{:href => "#"}
-                        %i.fa.fa-sign-blank.text-warning
-                        Friends
-                      %li
-                        %a{:href => "#"}
-                          %i.fa.fa-sign-blank.text-primary
-                          Office
+                      Traffic Jam
                 / %ul.nav.nav-pills.nav-stacked.labels-info
                 /   %li
                 /     %h4 Buddy online
@@ -141,14 +133,13 @@
                 /           %p I do not think
                 .inbox-body.text-center
                   .btn-group
-                    %a.btn.mini.btn-primary{:href => "javascript:;"}
-                      %i.fa.fa-plus
-                  .btn-group
-                    %a.btn.mini.btn-success{:href => "javascript:;"}
-                      %i.fa.fa-phone
-                  .btn-group
                     %a.btn.mini.btn-info{:href => "javascript:;"}
                       %i.fa.fa-cog
+                      Settings
+                  .btn-group
+                    %a.btn.mini.btn-danger{:href => "javascript:;"}
+                      %i.fa.fa-sign-out
+                      Logout
               %aside.lg-side
                 = yield
       / end:content
