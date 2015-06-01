@@ -66,6 +66,7 @@ class MessagesController < ApplicationController
     contact = Contact.find(params[:contact_id])
     @messages = contact.messages
     @message = @messages.first
+    @message.update(read: true)
   end
 
   private
