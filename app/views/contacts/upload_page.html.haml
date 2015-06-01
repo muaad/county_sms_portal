@@ -1,0 +1,32 @@
+.inbox-head
+	%h3 Upload Contacts
+	%form.pull-right.position{:action => "#"}
+		.input-append
+			%input.sr-input{:placeholder => "Search Contacts", :type => "text"}
+				%button.btn.sr-btn{:type => "button"}
+					%i.fa.fa-search
+.inbox-body
+	%section.content
+		.row
+			.col-lg-12
+				.panel.panel-primary.panel-drop
+					.panel-heading
+						%h3.panel-title Contact Details Bulk Upload
+					.panel-body
+						= form_for @contact, :url => "upload_contacts_path", :html => { :class => "ui small form attached segment", :multipart => true } do |f|
+							.form-group
+								= f.file_field :upload_file, class: "form-control"
+							%button.btn.btn-primary.btn-rounded
+								%i.fa.fa-cloud-upload
+								Submit
+					.panel-footer{style: "padding: 10px 10px 5px"}
+						%p We currently support the xls, xlsx & csv file formats. Please ensure you follow the following rules:
+						%ol
+							%li
+								The first row must contain the column names
+							%li
+								The file should contain the following information, in this order:
+								%br
+								Contact's name, Contact's phone number and Contact's location
+							%li
+								All details must be provided
