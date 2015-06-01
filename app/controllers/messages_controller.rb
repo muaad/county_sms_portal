@@ -61,6 +61,12 @@ class MessagesController < ApplicationController
     end
   end
 
+  def conversation
+    contact = Contact.find(params[:contact_id])
+    @messages = contact.messages
+    @message = @messages.first
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_message
