@@ -4,7 +4,8 @@ class MessagesController < ApplicationController
   # GET /messages
   # GET /messages.json
   def index
-    @messages = Message.all
+    @messages = Message.all#incoming.order(created_at: :desc)
+    @conversations = Message.conversations
   end
 
   # GET /messages/1
