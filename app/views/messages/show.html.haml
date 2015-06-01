@@ -19,7 +19,8 @@
 						%button.btn.btn-sm.tooltips{"data-original-title" => "Trash", "data-placement" => "top", "data-toggle" => "tooltip", :title => ""}
 							%i.fa.fa-trash-o
 				.col-md-4.text-right
-					%p.date 8:02 PM 12 FEB 2014
+					%p.date
+						= time_formatter(@message.created_at)
 				.col-md-12
 					%h4 
 						= "#{@message.contact.name} [#{@message.contact.phone_number}]"
