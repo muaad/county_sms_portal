@@ -1,11 +1,10 @@
-# This file should contain all the record creation needed to seed the database with its default values.
-# The data can then be loaded with the rake db:seed (or created alongside the db with db:setup).
-#
-# Examples:
-#
-#   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
-#   Mayor.create(name: 'Emanuel', city: cities.first)
-user = CreateAdminService.new.call
-puts 'CREATED ADMIN USER: ' << user.email
-# Environment variables (ENV['...']) can be set in the file config/application.yml.
-# See http://railsapps.github.io/rails-environment-variables.html
+Message.create! contact: Contact.first, text: "GCM topic messaging allows your app server to send a message to multiple devices that have opted in to a particular topic. Based on the publish/subscribe model, topic messaging supports up to one million subscriptions per app.", incoming: false
+Message.create! contact: Contact.first, user: User.first, text: "The app server sends messages with payloads up to 2KB to the topic, and GCM handles the message routing and delivers the message reliably to the right devices.", incoming: true
+Message.create! contact: Contact.first, text: "That’s it! I hope this tutorial has helped you understand how shoutbox works and how we can make it look like Facebook chat box.", incoming: false
+Message.create! contact: Contact.first, user: User.first, text: "By the way, I do want to see it working live in your website, so if you are using this example, please do share your links here and good luck!", incoming: true
+Message.create! contact: Contact.first, text: "But we've seen this problem clear up with a restart of your browser, a solution which we suggest to you now only with great regret and self loathing.", incoming: false
+Message.create! contact: Contact.first, user: User.first, text: "Here’s PHP file shout.php, as you can see I have sanitized post variables using PHP filter_var(), and performed some MySQL query.", incoming: true
+Message.create! contact: Contact.first, text: "Since I don’t want to grow this database table large, I am keeping only 10 recent rows in the database, everything else will be deleted.", incoming: false
+Message.create! contact: Contact.first, user: User.first, text: "et’s get inspired and create an similar shoutbox which will look similar to Facebook chat box.", incoming: true
+Message.create! contact: Contact.first, text: "Here’s the CSS, I’ve tried to make it look close as possible to Facebook chat box. Should work in Chrome, Firefox and ie8+.", incoming: false
+Message.create! contact: Contact.first, user: User.first, text: "Facebook has this nice little chat box that doesn’t take up much space, and people can instantly interact with their friends, it is a cool feature to have in any website.", incoming: true
