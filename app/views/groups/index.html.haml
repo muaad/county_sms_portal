@@ -1,0 +1,27 @@
+%h1 Listing groups
+
+%table
+  %thead
+    %tr
+      %th Name
+      %th Location
+      %th Latitude
+      %th Longitude
+      %th
+      %th
+      %th
+
+  %tbody
+    - @groups.each do |group|
+      %tr
+        %td= group.name
+        %td= group.location
+        %td= group.latitude
+        %td= group.longitude
+        %td= link_to 'Show', group
+        %td= link_to 'Edit', edit_group_path(group)
+        %td= link_to 'Destroy', group, :method => :delete, :data => { :confirm => 'Are you sure?' }
+
+%br
+
+= link_to 'New Group', new_group_path

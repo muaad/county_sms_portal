@@ -1,0 +1,18 @@
+%p#notice= notice
+
+%p
+  %b Name:
+  = @group.name
+%p
+  %b Location:
+  = @group.location
+%p
+  %b Latitude:
+  = @group.latitude
+%p
+  %b Longitude:
+  = @group.longitude
+
+= link_to 'Edit', edit_group_path(@group)
+\|
+= link_to 'Back', groups_path
