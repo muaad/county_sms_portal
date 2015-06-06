@@ -53,13 +53,18 @@ ul.inbox-nav {
 	position: relative;
   overflow: hidden;
   bottom: 0;
-  min-height: 729px;
+  min-height: 700px;
   clear: both;
 }
 
 .view-mail {
 	overflow: scroll;
-	min-height: 500px;
+	height: 500px;
+}
+
+.seven-hundred {
+	overflow: scroll;
+	height: 700px;
 }
 
 #send-buttom {
@@ -90,5 +95,5 @@ ul.inbox-nav {
 }
 
 .lg-side {
-	min-height: 729px;
+	min-height: 700px;
 }
