@@ -1,3 +1,4 @@
+require "sms"
 class MessagesController < ApplicationController
   before_action :set_message, only: [:show, :edit, :update, :destroy]
 
@@ -5,7 +6,7 @@ class MessagesController < ApplicationController
   # GET /messages.json
   def index
     @messages = Message.all#incoming.order(created_at: :desc)
-    @conversations = Message.conversations
+    @conversations = Message.conversations.reverse#.sort_by(&:created_at)
   end
 
   # GET /messages/1
@@ -25,18 +26,75 @@ class MessagesController < ApplicationController
   # POST /messages
   # POST /messages.json
   def create
-    @message = Message.new(message_params)
+    # @message = Message.new(message_params)
 
-    respond_to do |format|
-      if @message.save
-        format.html { redirect_to @message, notice: 'Message was successfully created.' }
-        format.json { render :show, status: :created, location: @message }
-      else
-        format.html { render :new }
-        format.json { render json: @message.errors, status: :unprocessable_entity }
+    # respond_to do |format|
+    #   if @message.save
+    #     format.html { redirect_to @message, notice: 'Message was successfully created.' }
+    #     format.json { render :show, status: :created, location: @message }
+    #   else
+    #     format.html { render :new }
+    #     format.json { render json: @message.errors, status: :unprocessable_entity }
+    #   end
+    # end
+    begin
+      text = params["Text"]
+
+      if text.downcase.start_with?("county")
+        phone_number = params["MobileNumber"]
+        contact = Contact.find_or_create_by! phone_number: phone_number
+        msg = text.split(" ")[1..text.length].join(" ")
+        Message.create! contact: contact, user: current_user, text: msg
+
+        if msg.downcase.include?("name:") && msg.downcase.include?("location:")
+          name = msg.split(",")[0].split(":")[1].strip
+          location = msg.split(",")[1].split(":")[1].strip
+          contact.update(name: name, location: location)
+        end
+        if contact.profile_incomplete?
+          puts ">>>>>>>> Anything here?"
+          SMS.send_message("Hi. We don't seem to have your details. Please reply with your details in this format: Name: John, Location: Upperhill. Substitute with your real name and location. Don't forget to start with the word 'County' Thanks.", phone_number)
+        end
+      end
+      render json: {success: true}
+    rescue => error      
+      respond_to do |format|
+        format.all { render json: {error: error, status: :unprocessable_entity} }
       end
     end
   end
+
+  # def receipts
+  #   if params.has_key? (:receipts)
+  #     if params[:receipts][:receipt].kind_of? Array
+  #       params[:receipts][:receipt].each do |receipt|
+  #         receipt_id = receipt[:reference]
+  #         delivered = receipt[:status]
+  #         time_of_delivery = receipt[:timestamp]
+  #         sms = Sms.find_by_receipt_id receipt_id
+  #         if !sms.nil?
+  #           sms.delivered = delivered == "D"
+  #           sms.time_of_delivery = time_of_delivery
+  #           sms.save!
+  #         end
+  #       end
+  #     else
+  #       if params[:receipts][:receipt].any?
+  #         receipt = params[:receipts][:receipt]
+  #         receipt_id = receipt[:reference]
+  #         delivered = receipt[:status]
+  #         time_of_delivery = receipt[:timestamp]
+  #         sms = Sms.find_by_receipt_id receipt_id
+  #         if !sms.nil?
+  #           sms.delivered = delivered == "D"
+  #           sms.time_of_delivery = time_of_delivery
+  #           sms.save!
+  #         end
+  #       end
+  #     end
+  #   end
+  #   render text: "OK"
+  # end
 
   # PATCH/PUT /messages/1
   # PATCH/PUT /messages/1.json
@@ -65,8 +123,8 @@ class MessagesController < ApplicationController
   def conversation
     contact = Contact.find(params[:contact_id])
     @messages = contact.messages
-    @message = @messages.first
-    @message.update(read: true)
+    @message = @messages.last
+    @messages.update_all(read: true)
   end
 
   private
