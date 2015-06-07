@@ -5,96 +5,97 @@
       %input.sr-input{:placeholder => "Search Contacts", :type => "text"}
         %button.btn.sr-btn{:type => "button"}
           %i.fa.fa-search
-.row
-  .col-md-12
-    .adv-table
-      .btn-toolbar.pull-right{role: "toolbar"}
-        .btn-group
-          %button.btn.btn-default.dropdown-toggle{"data-toggle" => "dropdown", :type => "button"}
-            %i.fa.fa-filter
-            Filter
-            %span.caret
-          %ul.dropdown-menu{:role => "menu"}
-            - Group.all.each do |g|
-              %li
-                %a{:href => "?group=#{g.id}", id: "#{g.name}"}
+.seven-hundred
+  .row
+    .col-md-12
+      .adv-table
+        .btn-toolbar.pull-right{role: "toolbar"}
+          .btn-group
+            %button.btn.btn-default.dropdown-toggle{"data-toggle" => "dropdown", :type => "button"}
+              %i.fa.fa-filter
+              Filter
+              %span.caret
+            %ul.dropdown-menu{:role => "menu"}
+              - Group.all.each do |g|
+                %li
+                  %a{:href => "?group=#{g.id}", id: "#{g.name}"}
+                    = g.name
+            %a.btn.btn-default{href: contacts_upload_page_path}
+              %i.fa.fa-cloud-upload
+              Upload
+              / %span.caret
+            %a.btn.btn-default#move_to_class{href: "#", "data-toggle" => "modal", "data-target" => "#group_modal"}
+              %i.fa.fa-mail-forward
+              Add to Group        
+            %a#delete-students.btn.btn-default{href: "#", "data-toggle" => "modal", "data-target" => "#delete_modal"}
+              %i.fa.fa-times
+              Delete     
+            %a.btn.btn-default{href: "#{new_contact_path}"}
+              %i.fa.fa-plus
+              New
+        %table#example.display.table.table-bordered.table-striped
+          %thead
+            %tr
+              %th
+                = check_box_tag "toggle_contacts"
+              %th Name
+              %th Phone Number
+              %th Messages
+              %th Location
+          %tbody.contacts_table
+            - @contacts.each do |contact|
+              %tr.gradeX
+                %td
+                  = check_box_tag "contact[contact.id]", contact.id
+                %td
+                  = link_to contact.name, contact
+                %td
+                  = contact.phone_number
+                %td
+                  = link_to contact.messages.count, messages_path
+                %td
+                  = contact.location
+
+  #delete_modal.modal.fade{"aria-hidden" => "true", "aria-labelledby" => "myModalLabel", :role => "dialog", :tabindex => "-1"}
+    .modal-dialog
+      .modal-content
+        .modal-header
+          %button.close{"aria-label" => "Close", "data-dismiss" => "modal", :type => "button"}
+            %span{"aria-hidden" => "true"} &times;
+          %h4#myModalLabel.modal-title Delete Contacts?
+        = form_tag delete_multiple_contacts_path do |f|
+          .modal-body
+            %label#lbl-msg
+            = hidden_field_tag 'delete_contacts'
+          .modal-footer
+            %button.btn.btn-default{"data-dismiss" => "modal", :type => "button"} 
+              %i.fa.fa-times
+              Cancel
+            %button.btn.btn-danger{:type => "submit"} 
+              %i.fa.fa-trash-o
+              Delete
+
+  #group_modal.modal.fade{"aria-hidden" => "true", "aria-labelledby" => "myModalLabel", :role => "dialog", :tabindex => "-1"}
+    .modal-dialog
+      .modal-content
+        .modal-header
+          %button.close{"aria-label" => "Close", "data-dismiss" => "modal", :type => "button"}
+            %span{"aria-hidden" => "true"} &times;
+          %h4#myModalLabel.modal-title Add Contacts to group
+        = form_tag add_to_group_path do |f|
+          .modal-body
+            %label#lbl-msg
+            = hidden_field_tag 'contacts'
+            / %label Select a class from the dropdown below
+            %select.form-control{name: 'group'}
+              / %option{value: "select"} Select a class
+              - Group.all.each do |g|
+                %option{value: g.name}
                   = g.name
-          %a.btn.btn-default{href: contacts_upload_page_path}
-            %i.fa.fa-cloud-upload
-            Upload
-            / %span.caret
-          %a.btn.btn-default#move_to_class{href: "#", "data-toggle" => "modal", "data-target" => "#group_modal"}
-            %i.fa.fa-mail-forward
-            Add to Group        
-          %a#delete-students.btn.btn-default{href: "#", "data-toggle" => "modal", "data-target" => "#delete_modal"}
-            %i.fa.fa-times
-            Delete     
-          %a.btn.btn-default{href: "#{new_contact_path}"}
-            %i.fa.fa-plus
-            New
-      %table#example.display.table.table-bordered.table-striped
-        %thead
-          %tr
-            %th
-              = check_box_tag "toggle_contacts"
-            %th Name
-            %th Phone Number
-            %th Messages
-            %th Location
-        %tbody.contacts_table
-          - @contacts.each do |contact|
-            %tr.gradeX
-              %td
-                = check_box_tag "contact[contact.id]", contact.id
-              %td
-                = link_to contact.name, contact
-              %td
-                = contact.phone_number
-              %td
-                = link_to contact.messages.count, messages_path
-              %td
-                = contact.location
-
-#delete_modal.modal.fade{"aria-hidden" => "true", "aria-labelledby" => "myModalLabel", :role => "dialog", :tabindex => "-1"}
-  .modal-dialog
-    .modal-content
-      .modal-header
-        %button.close{"aria-label" => "Close", "data-dismiss" => "modal", :type => "button"}
-          %span{"aria-hidden" => "true"} &times;
-        %h4#myModalLabel.modal-title Delete Contacts?
-      = form_tag delete_multiple_contacts_path do |f|
-        .modal-body
-          %label#lbl-msg
-          = hidden_field_tag 'delete_contacts'
-        .modal-footer
-          %button.btn.btn-default{"data-dismiss" => "modal", :type => "button"} 
-            %i.fa.fa-times
-            Cancel
-          %button.btn.btn-danger{:type => "submit"} 
-            %i.fa.fa-trash-o
-            Delete
-
-#group_modal.modal.fade{"aria-hidden" => "true", "aria-labelledby" => "myModalLabel", :role => "dialog", :tabindex => "-1"}
-  .modal-dialog
-    .modal-content
-      .modal-header
-        %button.close{"aria-label" => "Close", "data-dismiss" => "modal", :type => "button"}
-          %span{"aria-hidden" => "true"} &times;
-        %h4#myModalLabel.modal-title Add Contacts to group
-      = form_tag add_to_group_path do |f|
-        .modal-body
-          %label#lbl-msg
-          = hidden_field_tag 'contacts'
-          / %label Select a class from the dropdown below
-          %select.form-control{name: 'group'}
-            / %option{value: "select"} Select a class
-            - Group.all.each do |g|
-              %option{value: g.name}
-                = g.name
-        .modal-footer
-          %button.btn.btn-default{"data-dismiss" => "modal", :type => "button"} 
-            %i.fa.fa-times
-            Cancel
-          %button.btn.btn-success{:type => "submit"} 
-            %i.fa.fa-plus
-            Add to group
+          .modal-footer
+            %button.btn.btn-default{"data-dismiss" => "modal", :type => "button"} 
+              %i.fa.fa-times
+              Cancel
+            %button.btn.btn-success{:type => "submit"} 
+              %i.fa.fa-plus
+              Add to group

@@ -18,15 +18,16 @@
             .mail-box
               %aside.sm-side.slimScrollDiv
                 .user-head.fixed
-                  %a.inbox-avatar{:href => "javascript:;"}
-                    %img.img-responsive{:alt => "", :src => "img/user.jpg"}
+                  / %a.inbox-avatar{:href => "javascript:;"}
+                  /   %img.img-responsive{:alt => "", :src => "img/user.jpg"}
                   .user-name
-                    %h5
-                      %a{:href => "#"} Jonathan Smith
-                    %span
-                      %a{:href => "#"} jsmith@gmail.com
-                  %a.mail-dropdown.pull-right{:href => "javascript:;"}
-                    %i.fa.fa-chevron-down
+                    %h3 Nairobi County SMS
+                    / %h5
+                    /   %a{:href => "#"} Jonathan Smith
+                    / %span
+                    /   %a{:href => "#"} jsmith@gmail.com
+                  / %a.mail-dropdown.pull-right{:href => "javascript:;"}
+                  /   %i.fa.fa-chevron-down
                 .inbox-body
                   %a.btn.btn-compose{"data-toggle" => "modal", :href => "#myModal"}
                     Compose
@@ -70,7 +71,8 @@
                     %a{:href => messages_path}
                       %i.fa.fa-inbox
                       Inbox
-                      %span.label.label-danger.pull-right 2
+                      %span.label.label-danger.pull-right
+                        = Message.incoming.unread.count
                   %li
                     %a{:href => "#"}
                       %i.fa.fa-envelope-o
@@ -87,7 +89,8 @@
                     %a{:href => "#"}
                       %i.fa.fa-users
                       Contacts
-                      %span.label.label-primary.pull-right 200
+                      %span.label.label-primary.pull-right
+                        = Contact.count
                 %ul.nav.nav-pills.nav-stacked.labels-info.inbox-divider
                   %li
                     %h4 Categories

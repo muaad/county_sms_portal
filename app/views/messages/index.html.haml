@@ -48,17 +48,17 @@
       %ul.dropdown-menu
         %li
           %a{:href => "#"}
-            %i.fa.fa-pencil
-            Mark as Read
+            %i.fa.fa-ambulance
+            Accidents
         %li
           %a{:href => "#"}
             %i.fa.fa-ban
-            Spam
+            Traffic Jams
         %li.divider
         %li
           %a{:href => "#"}
             %i.fa.fa-trash-o
-            Delete
+            Corruption
     %ul.unstyled.inbox-pagination
       %li
         %span 1-50 of 234
@@ -68,11 +68,11 @@
       %li
         %a.np-btn{:href => "#"}
           %i.fa.fa-angle-right.pagination-right
-  .messages
+  .seven-hundred
     %table.table.table-inbox.table-hover
       %tbody
         - @conversations.each do |message|
-          %tr{class: "#{message.read ? '' : 'unread'}"}
+          %tr{class: "#{message.read ? '' : 'unread'}", onclick: "document.location = 'conversations/#{message.contact.id}' ;"}
             %td.inbox-small-cells
               %input.mail-checkbox{:type => "checkbox"}
             %td.inbox-small-cells
@@ -80,9 +80,9 @@
             %td.view-message.dont-show
               = message.contact.name
             %td.view-message
-              = message.text[0..20]
-            %td.view-message.inbox-small-cells
-              %i.fa.fa-paperclip
+              = "#{message.text[0..100]}..."
+            / %td.view-message.inbox-small-cells
+            /   %i.fa.fa-paperclip
             %td.view-message.text-right
               = time_formatter(message.created_at)
         / %tr.unread
