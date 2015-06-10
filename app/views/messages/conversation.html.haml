@@ -25,11 +25,12 @@
 					%h4 
 						= "#{@message.contact.name} [#{@message.contact.phone_number}]"
 			.view-mail
+				%input#phone{type: "hidden", value: @message.contact.phone_number}
 				- @messages.each do |message|
 					.room-box
 						%h5.text-primary
 							%a{:href => contact_path(message.contact)}
-								= message.contact.name
+								= message.sender
 						%p
 							= message.text
 			.row.reply-box
@@ -37,4 +38,4 @@
 					.col-lg-11.txt-div
 						%textarea.form-control#txt-area{:type => "text"}
 					.col-lg-1.btn-div
-						%input.btn.btn-success.pull-right#send-buttom{type: "submit", value: "Reply"}
+						%input.btn.btn-success.pull-right#send-button{type: "submit", value: "Reply"}

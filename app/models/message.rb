@@ -13,9 +13,9 @@ class Message < ActiveRecord::Base
   def sender
   	from = nil
   	if incoming
-  		from = contact
+  		from = contact.name
   	else
-  		from = user
+  		from = "Nairobi"
   	end
   end
 end
