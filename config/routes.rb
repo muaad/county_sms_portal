@@ -5,9 +5,13 @@ Rails.application.routes.draw do
 	get "/conversations/:contact_id/" => "messages#conversation", as: "conversation"
 	post "/contacts/delete_multiple" => "contacts#delete_multiple", as: "delete_multiple_contacts"
 	post "/upload_contacts" => "contacts#bulk_upload", :as => "upload_contacts", via: [:post]
-	post "/add_to_class" => "contacts#add_to_group", :as => "add_to_group", via: [:post]
+  post "/add_to_class" => "contacts#add_to_group", :as => "add_to_group", via: [:post]
 	
-  resources :messages
+  post "/outgoing" => "messages#outgoing", :as => "outgoing", via: [:post]
+	
+  resources :messages do
+    collection { get :events }
+  end
 
   resources :categories
 

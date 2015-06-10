@@ -1,5 +1,6 @@
 require "sms"
 class MessagesController < ApplicationController
+  include ActionController::Live
   before_action :set_message, only: [:show, :edit, :update, :destroy]
 
   # GET /messages
@@ -125,6 +126,35 @@ class MessagesController < ApplicationController
     @messages = contact.messages
     @message = @messages.last
     @messages.update_all(read: true)
+
+    # respond_to do |format|
+    #   format.html { render :conversation }
+    #   format.json { render json: { conversation: @messages }}
+    # end
+  end
+
+  def outgoing
+    sms = SMS.new
+    sms.send_message params[:message], params[:phone_number]
+    render json: {success: true}
+  end
+
+  def events
+    response.headers["Content-Type"] = "text/event-stream"
+    start = Time.zone.now
+    10.times do |n|
+      Message.uncached do
+        Message.where('created_at > ?', start).each do |message|
+          response.stream.write "data: #{message.to_json}\n\n"
+          start = message.created_at
+        end
+      end
+      sleep 2
+    end
+  rescue IOError
+    logger.info "Stream closed"
+  ensure
+    response.stream.close
   end
 
   private
