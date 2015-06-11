@@ -74,19 +74,19 @@
                       %span.label.label-danger.pull-right
                         = Message.incoming.unread.count
                   %li
-                    %a{:href => "#"}
+                    %a{:href => "#{messages_path}?cat=sent"}
                       %i.fa.fa-envelope-o
                       Sent SMS
                   %li
-                    %a{:href => "#"}
+                    %a{:href => "#{messages_path}?cat=favorites"}
                       %i.fa.fa-star
-                      Favorite
+                      Favorites
                   %li
                     %a{:href => "#"}
                       %i.fa.fa-trash-o
                       Trash
                   %li
-                    %a{:href => "#"}
+                    %a{:href => contacts_path}
                       %i.fa.fa-users
                       Contacts
                       %span.label.label-primary.pull-right

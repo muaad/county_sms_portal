@@ -8,6 +8,7 @@ Rails.application.routes.draw do
   post "/add_to_class" => "contacts#add_to_group", :as => "add_to_group", via: [:post]
 	
   post "/outgoing" => "messages#outgoing", :as => "outgoing", via: [:post]
+  post "/toggle_favorite" => "messages#toggle_favorite", :as => "toggle_favorite", via: [:post]
 	
   resources :messages do
     collection { get :events }

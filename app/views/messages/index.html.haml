@@ -72,14 +72,14 @@
     %table.table.table-inbox.table-hover
       %tbody
         - @conversations.each do |message|
-          %tr{class: "#{message.read ? '' : 'unread'}", onclick: "document.location = 'conversations/#{message.contact.id}' ;"}
+          %tr{class: "#{message.read ? '' : 'unread'}"}
             %td.inbox-small-cells
               %input.mail-checkbox{:type => "checkbox"}
             %td.inbox-small-cells
-              %i.fa.fa-star
-            %td.view-message.dont-show
+              %i.fa.fa-star.favorite{class: "#{message.contact.favorite ? 'starred' : ''}", "data-contact" => message.contact.id}
+            %td.view-message.dont-show{onclick: "document.location = 'conversations/#{message.contact.id}' ;"}
               = message.contact.name
-            %td.view-message
+            %td.view-message{onclick: "document.location = 'conversations/#{message.contact.id}' ;"}
               = "#{message.text[0..100]}..."
             / %td.view-message.inbox-small-cells
             /   %i.fa.fa-paperclip

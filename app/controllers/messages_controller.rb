@@ -7,7 +7,15 @@ class MessagesController < ApplicationController
   # GET /messages.json
   def index
     @messages = Message.all#incoming.order(created_at: :desc)
-    @conversations = Message.conversations.reverse#.sort_by(&:created_at)
+    if params[:cat]
+      if params[:cat] == "sent"
+        @conversations = Message.sent.reverse
+      elsif params[:cat] == "favorites"
+        @conversations = Message.favorites.reverse
+      end
+    else
+      @conversations = Message.conversations.reverse#.sort_by(&:created_at)
+    end
   end
 
   # GET /messages/1
@@ -139,6 +147,12 @@ class MessagesController < ApplicationController
     sms = SMS.new
     sms.send_message params[:message], params[:phone_number]
     render json: {success: true}
+  end
+
+  def toggle_favorite
+    contact = Contact.find(params[:contact])
+    contact.update(favorite: !contact.favorite)
+    render json: {success: true, status: contact.favorite}
   end
 
   def events

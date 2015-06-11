@@ -10,6 +10,14 @@ class Message < ActiveRecord::Base
   	Contact.all.collect{|c| c.messages.incoming.last if !c.messages.empty?}.compact
   end
 
+  def self.sent
+    Contact.all.collect{|c| c.messages.outgoing.last if !c.messages.empty?}.compact
+  end
+
+  def self.favorites
+    Contact.favorites.collect{|c| c.messages.incoming.last if !c.messages.empty?}.compact
+  end
+
   def sender
   	from = nil
   	if incoming

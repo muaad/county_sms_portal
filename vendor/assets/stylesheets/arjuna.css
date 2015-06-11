@@ -2479,6 +2479,10 @@ ul.labels-info li a i {
   color: #d5d5d5;
 }
 
+.table-inbox tr td .starred {
+  color: orange;
+}
+
 .table-inbox tr.unread td {
   font-weight: 600;
   background: #f7f7f7;
