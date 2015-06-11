@@ -16,15 +16,19 @@ $(function() {
 		var phone = $('#phone').val();
 		var msg = '<div class="room-box"><h5 class="text-primary">  <a href="#">    Nairobi  </a></h5><p>' + message + '</p></div>'
 
+		$('.view-mail').append(msg);
+		$('#txt-area').val("");
+		$('.view-mail').scrollTop($('.view-mail')[0].scrollHeight);
+
 		$.ajax({
 		  type: "POST",
 		  url: '/outgoing',
 		  dataType: 'json',
 		  data: {phone_number: phone, message: message},
 		  success: function(data, textStatus, jqXhr) {
-		    $('.view-mail').append(msg);
-		    $('#txt-area').val("");
-		    $('.view-mail').scrollTop($('.view-mail')[0].scrollHeight);
+		    // $('.view-mail').append(msg);
+		    // $('#txt-area').val("");
+		    // $('.view-mail').scrollTop($('.view-mail')[0].scrollHeight);
 		    // $(".view-mail").animate({ scrollTop: $('.view-mail')[0].scrollHeight}, 1000);
 		  },
 		  error: function (request, status, error) {

@@ -38,6 +38,7 @@ class MessagesController < ApplicationController
     #     format.json { render json: @message.errors, status: :unprocessable_entity }
     #   end
     # end
+    # response.headers["Content-Type"] = "text/javascript"
     begin
       text = params["Text"]
 
@@ -45,7 +46,7 @@ class MessagesController < ApplicationController
         phone_number = params["MobileNumber"]
         contact = Contact.find_or_create_by! phone_number: phone_number
         msg = text.split(" ")[1..text.length].join(" ")
-        Message.create! contact: contact, user: current_user, text: msg
+        @message = Message.create! contact: contact, user: current_user, text: msg
 
         if msg.downcase.include?("name:") && msg.downcase.include?("location:")
           name = msg.split(",")[0].split(":")[1].strip
@@ -57,6 +58,7 @@ class MessagesController < ApplicationController
           SMS.send_message("Hi. We don't seem to have your details. Please reply with your details in this format: Name: John, Location: Upperhill. Substitute with your real name and location. Don't forget to start with the word 'County' Thanks.", phone_number)
         end
       end
+      # $redis.publish('message.create', @message.to_json)
       render json: {success: true}
     rescue => error      
       respond_to do |format|
@@ -151,6 +153,13 @@ class MessagesController < ApplicationController
       end
       sleep 2
     end
+
+    # redis = Redis.new
+    # redis.subscribe('message.create') do |on|
+    #   on.message do |event, data|
+    #     response.stream.write "data: #{data}\n\n"
+    #   end
+    # end
   rescue IOError
     logger.info "Stream closed"
   ensure

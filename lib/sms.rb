@@ -22,6 +22,7 @@ class SMS
 	# end
 	def send_message text, phone_number
 		send phone_number, text
+		Message.create! contact: Contact.find_by(phone_number: phone_number), text: text, incoming: false
 	# 	begin
 	# 	  reports = @gateway.sendMessage(phone_number, text)
 		  
