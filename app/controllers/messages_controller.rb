@@ -35,8 +35,7 @@ class MessagesController < ApplicationController
   # POST /messages
   # POST /messages.json
   def create
-    puts ">>>>>>>>>>>>>>>>>#{params}"
-    logger.info ">>>>>>>>>>>>>>>>>#{params}"
+    # {"MSISDN"=>"254722778438", "Shortcode"=>"20619", "Reference"=>"13.1501.1436499291.1", "Content"=>"County hello tests", "Channel"=>"KENYA.SAFARICOM", "DataType"=>"0", "DateReceived"=>"1436499291", "CampaignID"=>"120750", "Trigger"=>"COUNTY", "controller"=>"messages", "action"=>"create"}
     # @message = Message.new(message_params)
 
     # respond_to do |format|
@@ -49,32 +48,32 @@ class MessagesController < ApplicationController
     #   end
     # end
     # response.headers["Content-Type"] = "text/javascript"
-    # begin
-    #   text = params["Text"]
+    begin
+      text = params["Content"]
 
-    #   if text.downcase.start_with?("county")
-    #     phone_number = params["MobileNumber"]
-    #     contact = Contact.find_or_create_by! phone_number: phone_number
-    #     msg = text.split(" ")[1..text.length].join(" ")
-    #     @message = Message.create! contact: contact, user: current_user, text: msg
+      if text.downcase.start_with?("county")
+        phone_number = params["MSISDN"]
+        contact = Contact.find_or_create_by! phone_number: phone_number
+        msg = text.split(" ")[1..text.length].join(" ")
+        @message = Message.create! contact: contact, user: current_user, text: msg
 
-    #     if msg.downcase.include?("name:") && msg.downcase.include?("location:")
-    #       name = msg.split(",")[0].split(":")[1].strip
-    #       location = msg.split(",")[1].split(":")[1].strip
-    #       contact.update(name: name, location: location)
-    #     end
-    #     if contact.profile_incomplete?
-    #       puts ">>>>>>>> Anything here?"
-    #       SMS.send_message("Hi. We don't seem to have your details. Please reply with your details in this format: Name: John, Location: Upperhill. Substitute with your real name and location. Don't forget to start with the word 'County' Thanks.", phone_number)
-    #     end
-    #   end
-    #   # $redis.publish('message.create', @message.to_json)
-    #   render json: {success: true}
-    # rescue => error      
-    #   respond_to do |format|
-    #     format.all { render json: {error: error, status: :unprocessable_entity} }
-    #   end
-    # end
+        if msg.downcase.include?("name:") && msg.downcase.include?("location:")
+          name = msg.split(",")[0].split(":")[1].strip
+          location = msg.split(",")[1].split(":")[1].strip
+          contact.update(name: name, location: location)
+        end
+        if contact.profile_incomplete?
+          logger.info ">>>>>>>> Anything here?"
+          SMS.send_message("Hi. We don't seem to have your details. Please reply with your details in this format: Name: John, Location: Upperhill. Substitute with your real name and location. Don't forget to start with the word 'County' Thanks.", phone_number)
+        end
+      end
+      # $redis.publish('message.create', @message.to_json)
+      render json: {success: true}
+    rescue => error      
+      respond_to do |format|
+        format.all { render json: {error: error, status: :unprocessable_entity} }
+      end
+    end
   end
 
   # def receipts
