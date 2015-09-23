@@ -18,11 +18,11 @@ class SMS
   end
 	
 	def send_message text, phone_number
-		segments = [message]
-		segments = split_message(message)
+		segments = [text]
+		segments = split_message(text)
 
-		segments.each do |text|
-			send phone_number, text
+		segments.each do |txt|
+			send phone_number, txt
 		end
 		Message.create! contact: Contact.find_by(phone_number: phone_number), text: text, incoming: false
 	end
