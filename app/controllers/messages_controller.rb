@@ -55,7 +55,7 @@ class MessagesController < ApplicationController
         phone_number = params["MSISDN"]
         contact = Contact.find_or_create_by! phone_number: phone_number
         msg = text.split(" ")[1..text.length].join(" ")
-        HTTParty.post("#{ENV[:DOCWHO_URL]}/questions", body: {text: msg, phone_number: phone_number, source: "SMS"})
+        HTTParty.post("#{ENV['DOCWHO_URL']}/questions", body: {text: msg, phone_number: phone_number, source: "SMS"})
         @message = Message.create! contact: contact, user: current_user, text: msg
 
         if msg.downcase.include?("name:") && msg.downcase.include?("location:")
