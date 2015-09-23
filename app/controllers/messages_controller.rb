@@ -65,7 +65,7 @@ class MessagesController < ApplicationController
         end
         if contact.profile_incomplete?
           logger.info ">>>>>>>> Anything here?"
-          SMS.new.send_message("Hi. We don't seem to have your details. Please reply with your details in this format: Name: John, Location: Upperhill. Substitute with your real name and location. Don't forget to start with the word 'County' Thanks.", phone_number)
+          # SMS.new.send_message("Hi. We don't seem to have your details. Please reply with your details in this format: Name: John, Location: Upperhill. Substitute with your real name and location. Don't forget to start with the word 'County' Thanks.", phone_number)
         end
       end
       # $redis.publish('message.create', @message.to_json)
